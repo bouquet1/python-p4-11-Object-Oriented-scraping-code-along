@@ -1,26 +1,28 @@
 # Object Oriented Scraping
 
+trying to see if commit is succesful
+
 ## Learning Goals
 
 - Scrape a web page's HTML using Beautiful Soup.
 - Use scraped data to give attributes to Python objects.
 - Write an object oriented Scraper class.
 
-***
+---
 
 ## Key Vocab
 
 - **Web scraping**: Web scraping, web harvesting, or web data extraction is
- data scraping used for extracting data from websites
+  data scraping used for extracting data from websites
 - **HTML**: The HyperText Markup Language or HTML is the standard markup
- language for documents designed to be displayed in a web browser.
+  language for documents designed to be displayed in a web browser.
 - **CSS**: Cascading Style Sheets is a style sheet language used for
- describing the presentation of a document written in a markup language
- such as HTML or XML.
+  describing the presentation of a document written in a markup language
+  such as HTML or XML.
 - **CSS selector**: CSS selectors define the elements to which a set of CSS
- rules apply.
+  rules apply.
 
-***
+---
 
 ## Introduction
 
@@ -36,11 +38,11 @@ be responsible for using Beautiful Soup to scrape the relevant data. It will
 also be responsible for taking that data and using it to instantiate instances
 of the `Course` class.
 
-***
+---
 
 ## Code Along I: The `Course` Class
 
-***Fork and clone this lab to get started!***
+**_Fork and clone this lab to get started!_**
 
 Before we build our `Scraper`, we'll build the `Course` class. We know that the
 purpose of our scrape is to get data to assign to the attributes of `Course`
@@ -66,7 +68,7 @@ class Course:
 
 ```
 
-Now, let's run *just* the `Course` specs by typing `pytest testing/course_test.py`
+Now, let's run _just_ the `Course` specs by typing `pytest testing/course_test.py`
 in the terminal. You should see the following test output:
 
 ```bash
@@ -130,7 +132,7 @@ class Course:
 Go ahead and run the test suite again. Now we should be passing all of our
 instance method tests!
 
-***
+---
 
 ## Code Along II: The `Scraper` Class
 
@@ -163,12 +165,12 @@ and `description` attribute that we scraped from the page.
 The `print_courses()` method we made for you! It calls on `.make_courses` and
 then iterates over all of the courses that get created to `print` out a list of
 course offerings using the `__str__` method we wrote for the Course class.
- We gave you this freebie so that we can easily see how cool it
+We gave you this freebie so that we can easily see how cool it
 is to scrape data and make real live Python objects with it.
 
 Now that we have a basic concept of the methods we're expected to build, we're
 going to ignore them (surprise!). We've already discussed how tricky it is to
-scrape data from a web page. It is a very precise process and it takes *a lot*
+scrape data from a web page. It is a very precise process and it takes _a lot_
 of playing around in `ipdb` to find the right CSS selectors for the desired data.
 So, we're going to start by building our `get_page()` method. **As soon as we get
 the HTML document using Beautiful Soup, we will drop into our program using `ipdb` and
@@ -182,7 +184,7 @@ Open up `lib/Scraper.py` and define the `.get_page` method:
 
 ```py
 
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup
 import requests
 import ipdb
 
@@ -193,7 +195,7 @@ class Scraper:
 
     def get_page(self):
       # more code coming soon!
-    
+
 ```
 
 Notice that we are already requiring Beautiful Soup, requests and ipdb at the
@@ -216,7 +218,7 @@ terminal in order to find the CSS selectors we're looking for:
 
 ```py
 
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup
 import requests
 import ipdb
 import Course
@@ -267,7 +269,7 @@ Let's take a closer look at the highlighted line in the element inspector:
 ```
 
 Looks like the element that contains an individual course has a class of "post".
-Let's use this CSS selector of `.post` to try to grab *all* courses.
+Let's use this CSS selector of `.post` to try to grab _all_ courses.
 
 Go back to your terminal and execute the following line:
 
@@ -294,7 +296,7 @@ schedule and description of each one.
 
 We know that a collection of Beautiful Soup results element functions like a list. So,
 it makes sense that we can iterate over the collection in order to grab the title, schedule and description of
-each one. BUT, before we worry about iterating, lets grab *just one element* and
+each one. BUT, before we worry about iterating, lets grab _just one element_ and
 try to identify the correct CSS selectors for title, schedule and description.
 
 In your terminal, execute `doc.select(".post")[0]`. This will grab us just the
@@ -305,7 +307,7 @@ ipdb> doc.select(".post")[0]
 <article class="post"> <img src="http://flatiron-web-assets.s3.amazonaws.com/images/courses/web_app.png"/> <h2>Web Development Immersive</h2> <em class="date">Full-Time</em> <p>An intensive, Ruby and Javascript course that teaches the skills necessary to start a career as a full-stack software developer.</p> <div class="button-centering-container"> <a class="btn-more" href="/web">Learn More</a> </div> </article>
 ```
 
-This describes *just one course offering*. If you look closely, you'll see it
+This describes _just one course offering_. If you look closely, you'll see it
 contains all the info we need. You can see the title, the schedule and the
 description. The easiest way to ID the correct CSS selector for extracting this
 information, however, is to revisit the web page and examine a course offering
@@ -319,7 +321,7 @@ into a box) to hover over the title of the first course offering. You should see
 a tag appear when you hover over the course title with this tool. The tag should
 say `h2 750.428 x 28px`.
 
-We don't care about the height and width but we *do* care about the selector,
+We don't care about the height and width but we _do_ care about the selector,
 `h2`.
 
 Test the following code in your terminal:
@@ -428,7 +430,7 @@ In your `get_page()` method of the `Scraper` class, place the following code:
 ```py
 from bs4 import BeautifulSoup
 import requests
-from Course import Course 
+from Course import Course
 import json
 
 class Scraper:
@@ -490,13 +492,13 @@ Title: DIY Electronics - Build Your Own Sound Generating Circuit
  Schedule: WORKSHOP
  Description: This Beginners workshop teaches students the fundamentals of electricty, reading circuit diagrams, soldering, and how to build an Atari Punk Console (sound generating circuit) from scratch.
 ------------------
-Title: 
- Schedule: 
- Description: 
+Title:
+ Schedule:
+ Description:
 ------------------
-Title: 
- Schedule: 
- Description: 
+Title:
+ Schedule:
+ Description:
 ------------------
 ```
 
@@ -508,16 +510,16 @@ placeholder courses with the `.post` css selector.
 
 ### Extracting Our Code into Methods
 
-Okay, we have some great working code. But, it doesn't really *all* belong in
-the `get_page()` method. The `get_page()` method should be responsible for *just
-getting the page*. Let's do some refactoring and get our `Scraper` tests
+Okay, we have some great working code. But, it doesn't really _all_ belong in
+the `get_page()` method. The `get_page()` method should be responsible for _just
+getting the page_. Let's do some refactoring and get our `Scraper` tests
 passing!
 
 #### `get_page()`
 
-This method should contain *only the code for getting the HTML document*. Place
-the following code in your `get_page()` method and *comment out the rest of that
-method*. We'll need to refer to that code to get our other tests passing.
+This method should contain _only the code for getting the HTML document_. Place
+the following code in your `get_page()` method and _comment out the rest of that
+method_. We'll need to refer to that code to get our other tests passing.
 
 ```py
 class Scraper:
